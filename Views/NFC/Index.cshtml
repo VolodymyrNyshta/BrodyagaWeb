@@ -1,0 +1,80 @@
+﻿<button id="ScanButton">Прочитати мітку</button>
+<h3>Тестова інформація:</h3>
+<div id="output" class="output">
+    <div id="content"></div>
+    <div id="status"></div>
+    <pre id="log"></pre>
+</div>
+
+
+<script src="~/js/NFCScripts.js"></script>
+<script>
+    ScanButton.addEventListener("click", async () => {
+        /*
+        try {
+            //            const vNFCData = {
+            //                SectionId: 1,
+            //                Id: '{2b0bcd4c-8db6-4e20-a52f-af38104d9f57}'//'{00847A3D-96DB-4B30-A23C-C4FFB7E3C507}'
+            //            };
+
+            const vReq = await fetch(`/NFC/ProcessToken?SectionId=${vNFCData.SectionId}&Id=${vNFCData.Id}`, {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' }
+            });
+            const vResp = await vReq;
+            window.location.replace(vResp.url);
+        }
+        catch (error) {
+            log("Fetch error: " + error);
+        }
+*/
+
+        log("Очікую мітку....");
+        try {
+            const ndef = new NDEFReader();
+            await ndef.scan();
+
+            ndef.addEventListener("readingerror", () => {
+                log("Помилка при читанні мітки.");
+            });
+
+            ndef.addEventListener("reading", async ({ message }) => {
+                if ((message.records[0].recordType === 'mime') &&
+                    (message.records[0].mediaType === "application/json")) {
+                    const decoder = new TextDecoder();
+                    const vNFCData = JSON.parse(decoder.decode(message.records[0].data));
+                    log(`> SectionId: ${vNFCData.SectionId}`);
+                    log(`> Id: ${vNFCData.Id}`);
+
+                    try {
+                        /*
+                        const vNFCData = {
+                            SectionId: 1,
+                            Id: '{2b0bcd4c-8db6-4e20-a52f-af38104d9f57}'
+                        };
+                        */
+                        const vReq = await fetch(`/NFC/ProcessToken?SectionId=${vNFCData.SectionId}&Id=${vNFCData.Id}`, {
+                            method: 'GET',
+                            headers: { 'Content-Type': 'application/json' }
+                        });
+                        /*
+                        const vReq = await fetch('/NFC/ProcessToken', {
+                            method: 'POST',
+                            body: vNFCData,//JSON.stringify({ SectionId: vData.SectionId, Id: vData.Id }),
+                            headers: { 'Content-Type': 'application/json' }
+                        });
+                        */
+                        const vResp = await vReq;
+                        window.location.replace(vResp.url);
+                    }
+                    catch (error) {
+                        log("Помилка при відкритті сторінки: " + error);
+                    }
+                }
+            });
+        }
+        catch (error) {
+            log("Помилка NFC зчитувача: " + error);
+        }
+    });
+</script>

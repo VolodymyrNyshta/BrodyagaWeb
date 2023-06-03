@@ -1,0 +1,108 @@
+﻿@model BrodyagaWeb.Models.GoodInStock
+
+@{
+    ViewData["Title"] = "Майно в акті";
+}
+
+<h1>Перегляд</h1>
+
+<div>
+    <h4>Майно в акті</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DictGoods)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.GoodValue)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DictSize)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.GoodSize)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Cnt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Cnt) (@Model.GoodMeasure)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TransferAct)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => Model.GoodTransferAct)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Comment)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Comment)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Редагувати</a> |
+    <a asp-action="Index">До переліку</a>
+    <div class="col-md-4">
+        <button id="writeButton">Записати мітку</button>
+        <div id="output" class="output">
+            <div id="content"></div>
+            <div id="status"></div>
+            <pre id="log"></pre>
+        </div>
+    </div>
+</div>
+
+<hr />
+<h4>Зображення</h4>
+<div class="form-group">
+    @{
+        List<GoodImage> vImgs = ViewBag.Images ?? new List<GoodImage>();
+        var vImg = vImgs.Count != 0 ? vImgs.First() : new GoodImage();
+    }
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <!--Html.DisplayNameFor(itm => vImg.FileName)-->
+                </th>
+                <th>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var vItem in vImgs)
+            {
+                <tr>
+                    <td>
+                        <img src="@vItem.ImageUrl" alt="Sample Image" />
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script src="~/js/NFCScripts.js"></script>
+<script>
+    writeButton.addEventListener("click", async () => {
+        log("Очікую мітку....");
+
+        try {
+            WriteNFC(2, `{ @Model.Id.ToString()}`);
+        }
+        catch (error) {
+            log("Помилка при записі мітки: " + error);
+        }
+    });
+</script>

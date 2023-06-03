@@ -1,0 +1,61 @@
+﻿@model BrodyagaWeb.Models.GoodInStock
+
+@{
+    ViewData["Title"] = "Майно в акті";
+}
+
+<h1>Ви впевнені, що бажаєте видалити?</h1>
+<div>
+    <h4>Майно в акті</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DictGoods)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.GoodValue);
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DictSize)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.GoodSize);
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Cnt)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Cnt) (@Html.DisplayFor(model => model.GoodMeasure))
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TransferAct)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.GoodTransferAct)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Comment)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Comment)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Видалити" class="btn btn-danger" /> |
+
+        @if (ViewBag.ActionSource != null)
+        {
+            <a href="@ViewBag.ActionSource">До переліку</a>
+        }
+        else
+        {
+            <a asp-action="Index">До переліку</a>
+        }
+        @if (ViewBag.ActionSource != null)
+        {
+            <input type="hidden" name="ActionSource" value="@ViewBag.ActionSource" />
+        }
+    </form>
+</div>

@@ -1,0 +1,36 @@
+﻿@model BrodyagaWeb.Models.Unit
+
+@{
+    ViewData["Title"] = "Підрозділ";
+}
+
+<h1>Перегляд</h1>
+
+<div>
+    <h4>Підрозділ</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Number)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Number)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ParentId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ParentNumber)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OrderVal)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OrderVal)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Редагувати</a> |
+    <a asp-action="Index">До переліку</a>
+</div>

@@ -1,0 +1,58 @@
+﻿@model BrodyagaWeb.Models.TransferAct
+
+@{
+    ViewData["Title"] = "Акт Надх./Повер. майна";
+}
+
+<h1>Ви впевнені, що бажаєте видалити?</h1>
+<div>
+    <h4>Акт Надх./Повер. майна</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ActNumber)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ActNumber)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DictExtSrc)
+        </dt>
+        <dd class = "col-sm-10">
+            @if (Model.DictExtSrc != null)
+            {
+                @Html.DisplayFor(model => Model.DictExtSrc.Value);
+            }
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IsGiveOut)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IsGiveOut)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ActDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ActDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RegisterDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RegisterDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Comment)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Comment)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Видалити" class="btn btn-danger" /> |
+        <a asp-action="Index">До переліку</a>
+    </form>
+</div>

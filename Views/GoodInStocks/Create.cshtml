@@ -1,0 +1,96 @@
+﻿@model BrodyagaWeb.Models.GoodInStock
+
+<h1>Нове</h1>
+@{
+    if (ViewBag.TransferAct != null)
+    {
+        ViewData["Title"] = "Майно в акті " + ViewBag.TransferAct.ActNumber;
+        <h4>Майно в акті @ViewBag.TransferAct.ActNumber</h4>
+    }
+    else
+    {
+        ViewData["Title"] = "Майно в акті";
+        <h4>Майно в акті</h4>
+    }
+}
+
+
+<hr />
+<div class="row">
+    <form asp-action="Create" enctype="multipart/form-data">
+        <div class="col-md-4">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="DictGoodsId" class="control-label"></label>
+                <select asp-for="DictGoodsId" class="form-control" asp-items="ViewBag.DictGoodsId"></select>
+                <span asp-validation-for="DictGoodsId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DictSizeId" class="control-label"></label>
+                <select asp-for="DictSizeId" class="form-control" asp-items="ViewBag.DictSizeId"></select>
+                <span asp-validation-for="DictSizeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" value="0.0" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cnt" class="control-label"></label>
+                <input asp-for="Cnt" class="form-control" value="1" />
+                <span asp-validation-for="Cnt" class="text-danger"></span>
+            </div>
+            @{
+                if (ViewBag.TransferActList != null)
+                {
+                    <div class="form-group">
+                        <label asp-for="TransferActId" class="control-label"></label>
+                        <select asp-for="TransferActId" class="form-control" asp-items="ViewBag.TransferActList"></select>
+                        <span asp-validation-for="TransferActId" class="text-danger"></span>
+                    </div>
+                }
+                else
+                {
+                    <input type="hidden" asp-for="TransferActId" value=@ViewBag.TransferAct.Id />
+                }
+            }
+            <div class="form-group">
+                <label asp-for="Comment" class="control-label"></label>
+                <input asp-for="Comment" class="form-control" />
+                <span asp-validation-for="Comment" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label asp-for="Images" class="control-label"></label>
+                <input type="file" id="GoodImage" name="GoodImage" />
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Створити" class="btn btn-primary" />
+        </div>
+        @{
+            if (ViewBag.ActionSource != null)
+            {
+                <input type="hidden" name="ActionSource" value="@ViewBag.ActionSource" />
+            }
+        }
+    </form>
+</div>
+
+<div>
+    @if (ViewBag.ActionSource != null)
+    {
+        <a href="@ViewBag.ActionSource">До переліку</a>
+    }
+    else
+    {
+        <a asp-action="Index">До переліку</a>
+    }
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

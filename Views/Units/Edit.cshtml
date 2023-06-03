@@ -1,0 +1,66 @@
+﻿@model BrodyagaWeb.Models.Unit
+
+@{
+    ViewData["Title"] = "Підрозділи";
+}
+
+<h1>Редагування</h1>
+
+<h4>Рота</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Number" class="control-label"></label>
+                <input asp-for="Number" class="form-control" />
+                <span asp-validation-for="Number" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ParentId" class="control-label"></label>
+                <!--<input asp-for="ParentId" class="form-control" />-->
+                <select asp-for="ParentId" class="form-control" asp-items="ViewBag.Units"></select>
+                <span asp-validation-for="ParentId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OrderVal" class="control-label"></label>
+                <input asp-for="OrderVal" class="form-control" />
+                <span asp-validation-for="OrderVal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Зберегти" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">До переліку</a>
+</div>
+
+<h1>Перелік бійців</h1>
+
+@if(Model != null)
+{
+    <p>
+        <a asp-controller="Soldiers" asp-action="Create"
+           asp-route-UnitId="@Model.Id"
+           asp-route-ActionSource="@Url.RouteUrl(new {
+            controller = "Units",
+            action = "Edit",
+            id = Model.Id })">Новий боєць</a>
+    </p>
+    await Html.RenderPartialAsync(@"\Soldiers\_Index",
+        Model.Soldiers,
+        new ViewDataDictionary(ViewData)
+        {
+            {"ActionSource", @Url.RouteUrl(new {controller = "Units", action = "Edit", id = Model.Id }) },
+            {"UnitId", Model.Id}
+        });
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

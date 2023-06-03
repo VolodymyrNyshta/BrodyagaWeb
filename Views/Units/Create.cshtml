@@ -1,0 +1,44 @@
+﻿@model BrodyagaWeb.Models.Unit
+
+@{
+    ViewData["Title"] = "Підрозділ";
+}
+
+<h1>Новий</h1>
+
+<h4>Підрозділ</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Number" class="control-label"></label>
+                <input asp-for="Number" class="form-control" />
+                <span asp-validation-for="Number" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ParentId" class="control-label"></label>
+                <!--<input asp-for="ParentId" class="form-control" />-->
+                <select asp-for="ParentId" class="form-control" asp-items="ViewBag.Units"></select>
+                <span asp-validation-for="ParentId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OrderVal" class="control-label"></label>
+                <input asp-for="OrderVal" class="form-control" value="140" />
+                <span asp-validation-for="OrderVal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Створити" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">До переліку</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

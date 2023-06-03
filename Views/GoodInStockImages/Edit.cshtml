@@ -1,0 +1,39 @@
+﻿@model BrodyagaWeb.Models.GoodInStockImage
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>GoodInStockImage</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="GoodImageId" class="control-label"></label>
+                <input asp-for="GoodImageId" class="form-control" />
+                <span asp-validation-for="GoodImageId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GoodInStockId" class="control-label"></label>
+                <select asp-for="GoodInStockId" class="form-control" asp-items="ViewBag.GoodInStockId"></select>
+                <span asp-validation-for="GoodInStockId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

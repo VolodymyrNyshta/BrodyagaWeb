@@ -1,0 +1,73 @@
+﻿@model BrodyagaWeb.Models.Soldier
+
+@{
+    if (ViewBag.Unit != null)
+    {
+        ViewData["Title"] = "Новий боець " + ViewBag.Unit.Number;
+        <h4>Новий боець @ViewBag.Unit.Number</h4>
+    }
+    else
+    {
+        ViewData["Title"] = "Новий боець";
+        <h4>Новий боець</h4>
+    }
+}
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MidleName" class="control-label"></label>
+                <input asp-for="MidleName" class="form-control" />
+                <span asp-validation-for="MidleName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            @{
+                if (ViewBag.Units != null)
+                {
+                    <div class="form-group">
+                        <label asp-for="Unit" class="control-label"></label>
+                        <select asp-for="UnitId" class="form-control" asp-items="ViewBag.Units"></select>
+                        <span asp-validation-for="UnitId" class="text-danger"></span>
+                    </div>
+                }
+                else
+                {
+                    <input type="hidden" asp-for="UnitId" value=@ViewBag.Unit.Id />
+                }
+            }
+            <div class="form-group">
+                <input type="submit" value="Створити" class="btn btn-primary" />
+            </div>
+            @if (ViewBag.ActionSource != null)
+            {
+                <input type="hidden" name="ActionSource" value="@ViewBag.ActionSource" />
+            }
+        </form>
+    </div>
+</div>
+
+<div>
+    @if (ViewBag.ActionSource != null)
+    {
+        <a href="@ViewBag.ActionSource">До переліку</a>
+    }
+    else
+    {
+        <a asp-action="Index">До переліку</a>
+    }
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

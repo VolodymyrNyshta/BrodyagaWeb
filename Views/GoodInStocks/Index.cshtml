@@ -1,0 +1,68 @@
+﻿@model IEnumerable<BrodyagaWeb.Models.GoodInStock>
+
+@{
+    ViewData["Title"] = "Майно в акті";
+}
+
+<h1>Майно в акті</h1>
+
+<p>
+    <a asp-action="Create">Нове</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DictGoods)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DictSize)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cnt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TransferAct)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comment)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id">
+                        @Html.DisplayFor(modelItem => item.GoodValue)
+                    </a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GoodSize)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @item.Cnt @item.GoodMeasure
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GoodTransferAct)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Comment)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Редагувати</a> |
+                    <!--<a asp-action="Details" asp-route-id="@item.Id">Перегляд</a> |-->
+                    <a asp-action="Delete" asp-route-id="@item.Id">Видалити</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

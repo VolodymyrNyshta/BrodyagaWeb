@@ -1,0 +1,61 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+/*Для пунктов меню*/
+.menu-item {
+    border-bottom: 1px solid black; /*Красная граница пунктов*/
+    /*display: inline-block;*/ /*Выстраиваем пункты в линию*/
+    position: relative;
+    cursor: pointer; /*Указатель курсора мыши*/
+}
+
+/*Для раскрывающихся меню*/
+.menu-item .submenu {
+    height: 50px; /*высота открывающегося блока - не обязательный пункт*/
+    width: 150px; /*ширина блока*/
+    background: greenyellow; /*фон*/
+    display: none; /*скрываем все пункты меню*/
+    position: absolute;
+    cursor: pointer;
+}
+
+/*Удалить после проверки*/
+.positioned {
+    /*
+    position: static;
+    position: relative;
+    */
+    position: absolute;
+    /**/
+    top: 30px;
+    left: 30px;
+    /**/
+    /*
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0;
+    */
+    background: yellow;
+}

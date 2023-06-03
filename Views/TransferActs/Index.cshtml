@@ -1,0 +1,69 @@
+﻿@model IEnumerable<BrodyagaWeb.Models.TransferAct>
+
+@{
+    ViewData["Title"] = "Акти Надх./Повер. майна";
+}
+
+<h1>Акти Надх./Повер. майна</h1>
+
+<p>
+    <a asp-action="Create">Новий акт</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ActNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DictExtSrc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsGiveOut)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RegisterDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comment)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id">
+                        @Html.DisplayFor(modelItem => item.ActNumber)
+                    </a>
+                </td>
+                <td>
+                    @if (item.DictExtSrc != null)
+                        @Html.DisplayFor(model => item.DictExtSrc.Value)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsGiveOut)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RegisterDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Comment)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Редагувати</a> |
+                    <!--<a asp-action="Details" asp-route-id="@item.Id">Докладно</a> |-->
+                    <a asp-action="Delete" asp-route-id="@item.Id">Видалити</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,74 @@
+﻿@model IEnumerable<BrodyagaWeb.Models.Soldier>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                #
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MidleName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            @if (@ViewBag.ActionSource == null)
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.Unit)
+                </th>
+            }
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var Ind = 1;
+        }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <label>@Ind</label>
+                    @{Ind++;}
+                </td>
+                <td>
+                    <a asp-controller="Soldiers"
+                       asp-action="Edit"
+                       asp-route-id="@item.Id"
+                       asp-route-ActionSource="@ViewBag.ActionSource">
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MidleName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                @if (@ViewBag.ActionSource == null)
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UnitNumber)
+                    </td>
+                }
+                <td>
+                    <!--<a asp-controller="Soldiers"
+                       asp-action="Edit"
+                       asp-route-id="@item.Id"
+                       asp-route-ActionSource="@ViewBag.ActionSource">Редагувати</a> |-->
+                    <!--<a asp-action="Details"
+                    asp-route-id="@item.Id"
+                    asp-route-ActionSource="@ViewBag.ActionSource">Перегляд</a> |-->
+                    <a asp-controller="Soldiers"
+                        asp-action="Delete"
+                        asp-route-id="@item.Id"
+                        asp-route-ActionSource="@ViewBag.ActionSource">Видалити</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

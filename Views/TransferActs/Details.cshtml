@@ -1,0 +1,153 @@
+﻿@model BrodyagaWeb.Models.TransferAct
+
+@{
+    ViewData["Title"] = "Акти Надх./Повер. майна";
+}
+
+<div>
+    <h4>Акти Надх./Повер. майна</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ActNumber)
+        </dt>
+        <dd class="col-sm-10">
+            <a asp-action="Edit" asp-route-id="@Model?.Id">
+                @Html.DisplayFor(model => model.ActNumber)
+            </a>
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DictExtSrc)
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                if (Model?.DictExtSrc != null)
+                    @Html.DisplayFor(model => Model.DictExtSrc.Value)
+                ;
+            }
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IsGiveOut)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IsGiveOut)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ActDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ActDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RegisterDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RegisterDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Comment)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Comment)
+        </dd>
+    </dl>
+</div>
+<div>
+    <!--<a asp-action="Edit" asp-route-id="@Model?.Id">Редагувати</a> |-->
+    <a asp-action="Index">До переліку</a>
+    <div class="col-md-4">
+        <button id="writeButton">Записати мітку</button>
+        <div id="output" class="output">
+            <div id="content"></div>
+            <div id="status"></div>
+            <pre id="log"></pre>
+        </div>
+    </div>
+</div>
+<hr />
+<p>
+    <a asp-controller="GoodInStocks" asp-action="Create"
+       asp-route-TransferActId="@Model?.Id"
+       asp-route-ActionSource="@Url.RouteUrl(new {
+        controller = "TransferActs",
+        action = "Details",
+        id = Model?.Id })">Додати майно</a>
+</p>
+@if (ViewBag.GoodsInStock != null)
+{
+    List<GoodInStock> vItems = ViewBag.GoodsInStock;
+    if (vItems.Count != 0)
+    {
+        GoodInStock vGoodItm = vItems.First();
+
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => vGoodItm.DictGoods)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => vGoodItm.DictSize)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => vGoodItm.Price)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => vGoodItm.Cnt)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in vItems)
+                    {
+                        <tr>
+                            <td>
+                                <a asp-controller="GoodInStocks" asp-action="Edit" asp-route-id="@item.Id"
+                                   asp-route-ActionSource="@Url.RouteUrl(new {
+                                    controller = "TransferActs",
+                                    action = "Details",
+                                    id = Model?.Id })">
+                                    @Html.DisplayFor(modelItem => item.GoodValue)
+                                </a>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.GoodSize)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Price)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Cnt) (@Html.DisplayFor(modelItem => item.GoodMeasure))
+                            </td>
+                            <td>
+                                <!--<a asp-action="Edit" asp-route-id="@item.Id">Редагувати</a> |-->
+                                <!--<a asp-action="Details" asp-route-id="@item.Id">Details</a> |-->
+                                <a asp-controller="GoodInStocks" asp-action="Delete" asp-route-id="@item.Id"
+                                   asp-route-ActionSource="@Url.RouteUrl(new {
+                                    controller = "TransferActs",
+                                    action = "Details",
+                                    id = Model?.Id })">Видалити</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+}
+
+<script src="~/js/NFCScripts.js"></script>
+<script>
+    writeButton.addEventListener("click", async () => {
+        log("Очікую мітку....");
+
+        try {
+            WriteNFC(3, `{@Model.Id.ToString()}`);
+        }
+        catch (error) {
+            log("Argh! " + error);
+        }
+    });
+</script>

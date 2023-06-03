@@ -1,0 +1,71 @@
+﻿@model IEnumerable<BrodyagaWeb.Models.Unit>
+
+@{
+    ViewData["Title"] = "Бійці у підрозділах";
+}
+
+<h1>Бійці у підрозділах</h1>
+
+<p>
+    <a asp-action="Create">Новий боєць</a>
+</p>
+
+@foreach (var vUnit in Model) {
+    <div>
+        @if (vUnit.Soldiers != null)
+        {
+            <div>
+                <h1>@Html.DisplayFor(modelItem => vUnit.Number)</h1>
+                <hr>
+                <p>
+                    <a asp-action="Create" asp-route-UnitId="@vUnit.Id">Новий боєць</a>
+                </p>
+            </div>
+            <div>
+                @{
+                    var vFrstSldr = vUnit.Soldiers.FirstOrDefault();
+                    if (vFrstSldr != null)
+                    {
+                        <table class="table">
+                            <thead>
+                                <th>
+                                        @Html.DisplayNameFor(model => vFrstSldr.FirstName)
+                                </th>
+                                <th>
+                                        @Html.DisplayNameFor(model => vFrstSldr.MidleName)
+                                </th>
+                                <th>
+                                        @Html.DisplayNameFor(model => vFrstSldr.LastName)
+                                </th>
+                                <th></th>
+                            </thead>
+                            <tbody>
+                                @foreach (var vSoldier in vUnit.Soldiers)
+                                {
+                                    <tr>
+                                        <td>
+                                            <a asp-action="Edit" asp-route-id="@vSoldier.Id">
+                                                @Html.DisplayFor(modelItem => vSoldier.FirstName)
+                                            </a>
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => vSoldier.MidleName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => vSoldier.LastName)
+                                        </td>
+                                        <td>
+                                            <!--<a asp-action="Edit" asp-route-id="@vSoldier.Id">Редагувати</a> |-->
+                                            <a asp-action="Details" asp-route-id="@vSoldier.Id">Перегляд</a> |
+                                            <a asp-action="Delete" asp-route-id="@vSoldier.Id">Видалити</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                }
+            </div>
+        }
+    </div>
+}

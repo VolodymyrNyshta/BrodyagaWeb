@@ -1,0 +1,50 @@
+﻿@model IEnumerable<BrodyagaWeb.Models.Unit>
+
+@{
+    ViewData["Title"] = "Підрозділи";
+}
+
+<h1>Підрозділи</h1>
+
+<p>
+    <a asp-action="Create">Новий</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Number)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ParentNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderVal)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">
+                        @Html.DisplayFor(modelItem => item.Number)
+                    </a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ParentNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderVal)
+                </td>
+                <td>
+                    <!--<a asp-action="Edit" asp-route-id="@item.Id">Редагувати</a> |-->
+                    <!--<a asp-action="Details" asp-route-id="@item.Id">Перегляд</a> |-->
+                    <a asp-action="Delete" asp-route-id="@item.Id">Видалити</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
