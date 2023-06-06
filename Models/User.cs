@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BrodyagaWeb.Models
 {
-    [Table("Soldiers")]
-    public class Soldier
+    [Table("Users")]
+    public class User
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
@@ -20,6 +20,10 @@ namespace BrodyagaWeb.Models
 
         [ForeignKey("Units"), Display(Name = "Підрозділ")]
         public Guid UnitId { get; set; }
+      
+        public string UserName { get; set; }
+
+        public string  Password { get; set; }
 
         [Display(Name = "Підрозділ")]
         public virtual Unit? Unit { get; set; }

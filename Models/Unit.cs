@@ -28,6 +28,6 @@ namespace BrodyagaWeb.Models
         public int OrderVal { get; set; } = 1;
 
         [Display(Name = "Бійці")]
-        public virtual ICollection<Soldier>? Soldiers { get; set; }
+        public virtual ICollection<User>? Users { get; set; }
     }
 }

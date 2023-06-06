@@ -34,13 +34,13 @@ JOIN Platoon Plt on Plt.Id = Fig.IdPlatoon
   order by FirstName
             */
             var vUnits = await _context.Units.
-                Include(t => t.Soldiers).
+                Include(t => t.Users).
                 OrderBy(t => t.OrderVal).
                 ThenBy(t => t.ParentId).
                 ThenBy(t => t.Number).ToListAsync();
             return View("IndexByUnit", vUnits);
 
-            var vSoldiers = await _context.Soldiers.
+            var vSoldiers = await _context.Users.
                 Include(f => f.Unit).
                 OrderBy(t => t.Unit.OrderVal).
                 ThenBy(t => t.FirstName).ToListAsync();
@@ -50,22 +50,22 @@ JOIN Platoon Plt on Plt.Id = Fig.IdPlatoon
         // GET: Fighters/Details/5
         public async Task<IActionResult> Details(Guid? id, string? ActionSource)
         {
-            if (id == null || _context.Soldiers == null)
+            if (id == null || _context.Users == null)
             {
                 return NotFound();
             }
 
-            var vSoldier = await _context.Soldiers
+            var vUser = await _context.Users
                 .Include(f => f.Unit)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (vSoldier == null)
+            if (vUser == null)
             {
                 return NotFound();
             }
 
             if (ActionSource != null)
                 ViewData["ActionSource"] = ActionSource;
-            return View(vSoldier);
+            return View(vUser);
         }
 
         // GET: Fighters/Create
@@ -92,7 +92,7 @@ JOIN Platoon Plt on Plt.Id = Fig.IdPlatoon
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,MidleName,LastName,UnitId")] Soldier soldier,
+        public async Task<IActionResult> Create([Bind("Id,FirstName,MidleName,LastName,UnitId")] User soldier,
             string? ActionSource)
         {
             static string Normalize(string? AValue)
@@ -121,12 +121,12 @@ JOIN Platoon Plt on Plt.Id = Fig.IdPlatoon
         // GET: Fighters/Edit/5
         public async Task<IActionResult> Edit(Guid? id, string? ActionSource)
         {
-            if (id == null || _context.Soldiers == null)
+            if (id == null || _context.Users == null)
             {
                 return NotFound();
             }
 
-            var vSoldier = await _context.Soldiers
+            var vSoldier = await _context.Users
                 .Include(f => f.Unit)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (vSoldier == null)
@@ -144,10 +144,10 @@ JOIN Platoon Plt on Plt.Id = Fig.IdPlatoon
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,FirstName,MidleName,LastName,UnitId")] Soldier soldier,
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,FirstName,MidleName,LastName,UnitId")] User user,
             string? ActionSource)
         {
-            if (id != soldier.Id)
+            if (id != user.Id)
             {
                 return NotFound();
             }
@@ -156,12 +156,12 @@ JOIN Platoon Plt on Plt.Id = Fig.IdPlatoon
             {
                 try
                 {
-                    _context.Update(soldier);
+                    _context.Update(user);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SoldierExists(soldier.Id))
+                    if (!SoldierExists(user.Id))
                     {
                         return NotFound();
                     }
@@ -172,19 +172,19 @@ JOIN Platoon Plt on Plt.Id = Fig.IdPlatoon
                 }
                 return ActionSource == null ? RedirectToAction(nameof(Index)) : Redirect(ActionSource);
             }
-            ViewData["Units"] = new SelectList(_context.Units.OrderBy(t => t.OrderVal), "Id", "Number", soldier.UnitId);
-            return View(soldier);
+            ViewData["Units"] = new SelectList(_context.Units.OrderBy(t => t.OrderVal), "Id", "Number", user.UnitId);
+            return View(user);
         }
 
         // GET: Fighters/Delete/5
         public async Task<IActionResult> Delete(Guid? id, string? ActionSource)
         {
-            if (id == null || _context.Soldiers == null)
+            if (id == null || _context.Users == null)
             {
                 return NotFound();
             }
 
-            var vSoldier = await _context.Soldiers
+            var vSoldier = await _context.Users
                 .Include(f => f.Unit)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (vSoldier == null)
@@ -202,14 +202,14 @@ JOIN Platoon Plt on Plt.Id = Fig.IdPlatoon
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id, string? ActionSource)
         {
-            if (_context.Soldiers == null)
+            if (_context.Users == null)
             {
                 return Problem("Entity set 'BrodyagaWebContext.Fighters'  is null.");
             }
-            var vSoldier = await _context.Soldiers.FindAsync(id);
+            var vSoldier = await _context.Users.FindAsync(id);
             if (vSoldier != null)
             {
-                _context.Soldiers.Remove(vSoldier);
+                _context.Users.Remove(vSoldier);
             }
             
             await _context.SaveChangesAsync();
@@ -218,7 +218,7 @@ JOIN Platoon Plt on Plt.Id = Fig.IdPlatoon
 
         private bool SoldierExists(Guid id)
         {
-          return (_context.Soldiers?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Users?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

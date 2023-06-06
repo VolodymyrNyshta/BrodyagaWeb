@@ -15,13 +15,15 @@ namespace BrodyagaWeb.Data
             : base(options)
         {
         }
+        public BrodyagaWebContext() { }
 
         /*------------------------------------------*/
         public DbSet<DictGoodType> DictGoodType { get; set; } = default!;
         public DbSet<DictMeasure> DictMeasures { get; set; } = default!;
         public DbSet<DictFighterState> DictFighterStates { get; set; } = default!;
         public DbSet<Unit> Units { get; set; } = default!;
-        public DbSet<Soldier> Soldiers { get; set; } = default!;
+        public DbSet<User> Users { get; set; } = default!;
+        
         public IQueryable<Unit> GetUnits()
         {
             var vPlatoonSet = Units.FromSql($"SELECT * FROM dbo.VW_PlatoonTree ORDER BY ParentId, Number");
@@ -29,9 +31,9 @@ namespace BrodyagaWeb.Data
         }
 
         /*------------------------------------------*/
-        public IQueryable<Soldier> GetSoldiers()
+        public IQueryable<User> GetUsers()
         {
-            var vFigterSet = Soldiers.FromSql($@"SELECT Fighters.Id, 
+            var vFigterSet = Users.FromSql($@"SELECT Fighters.Id, 
     Fighters.IdPlatoon,
     Fighters.FirstName,
     Fighters.MidleName,
@@ -42,9 +44,9 @@ JOIN dbo.Platoon ON Platoon.Id = Fighters.IdPlatoon");
             return vFigterSet;
         }
 
-        public IQueryable<Soldier> GetFigter(Guid AId)
+        public IQueryable<User> GetFigter(Guid AId)
         {
-            var vFigterSet = Soldiers.FromSql($@"SELECT Fighters.Id, 
+            var vFigterSet = Users.FromSql($@"SELECT Fighters.Id, 
     Fighters.IdPlatoon,
     Fighters.FirstName,
     Fighters.MidleName,

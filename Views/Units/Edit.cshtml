@@ -53,7 +53,7 @@
             id = Model.Id })">Новий боєць</a>
     </p>
     await Html.RenderPartialAsync(@"\Soldiers\_Index",
-        Model.Soldiers,
+        Model.Users,
         new ViewDataDictionary(ViewData)
         {
             {"ActionSource", @Url.RouteUrl(new {controller = "Units", action = "Edit", id = Model.Id }) },

@@ -13,8 +13,8 @@ namespace BrodyagaWeb.Models
         [Display(Name = "Коментар")]
         public string? Comment { get; set; }
 
-        [ForeignKey(nameof(Soldier))]
-        public Guid FightersId { get; set; }
+        [ForeignKey(nameof(User))]
+        public Guid UserId { get; set; }
         [ForeignKey(nameof(DictGoods))]
         public Guid DictGoodsId { get; set; }
 

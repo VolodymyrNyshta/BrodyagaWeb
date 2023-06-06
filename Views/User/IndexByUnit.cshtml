@@ -12,7 +12,7 @@
 
 @foreach (var vUnit in Model) {
     <div>
-        @if (vUnit.Soldiers != null)
+        @if (vUnit.Users != null)
         {
             <div>
                 <h1>@Html.DisplayFor(modelItem => vUnit.Number)</h1>
@@ -23,7 +23,7 @@
             </div>
             <div>
                 @{
-                    var vFrstSldr = vUnit.Soldiers.FirstOrDefault();
+                    var vFrstSldr = vUnit.Users.FirstOrDefault();
                     if (vFrstSldr != null)
                     {
                         <table class="table">
@@ -40,7 +40,7 @@
                                 <th></th>
                             </thead>
                             <tbody>
-                                @foreach (var vSoldier in vUnit.Soldiers)
+                                @foreach (var vSoldier in vUnit.Users)
                                 {
                                     <tr>
                                         <td>

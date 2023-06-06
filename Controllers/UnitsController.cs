@@ -90,7 +90,7 @@ namespace BrodyagaWeb.Controllers
             {
                 return NotFound();
             }
-            vUnit.Soldiers = await _context.Soldiers.
+            vUnit.Users = await _context.Users.
                 Where(t => t.UnitId == id).
                 OrderBy(t => t.FirstName).
                 ToListAsync();
